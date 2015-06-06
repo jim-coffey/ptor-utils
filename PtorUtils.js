@@ -3,13 +3,46 @@ var PtorUtils = function() {
   // The browser wait gets called as many times as needed until
   // the promise is fulfilled
   // If the promise is never fulfilled, timeouts will Fail the tests
-  this.waitForPromiseTest = function(promiseFn, testFn) {
+  // The promise function being tested can accept up to 4 arguments.
+  this.waitForPromiseTest = function(promiseFn, testFn, args) {
     browser.wait(function () {
       var deferred = protractor.promise.defer();
+      var fnArgs   = args ? args.length : 0;
 
-      promiseFn().then(function(data) {
-        deferred.fulfill(testFn(data));
-      });
+      switch(fnArgs) {
+        case 0:
+          promiseFn().then(function(data) {
+            deferred.fulfill(testFn(data));
+          });
+          break;
+
+        case 1:
+          promiseFn(args[0]).then(function(data) {
+            deferred.fulfill(testFn(data));
+          });
+          break;
+
+        case 2:
+          promiseFn(args[0], args[1]).then(function(data) {
+            deferred.fulfill(testFn(data));
+          });
+          break;
+
+        case 3:
+          promiseFn(args[0], args[1], args[2]).then(function(data) {
+            deferred.fulfill(testFn(data));
+          });
+          break;
+
+        case 4:
+          promiseFn(args[0], args[1], args[2], args[3]).then(function(data) {
+            deferred.fulfill(testFn(data));
+          });
+          break;
+
+        default:
+          return null;
+      }
 
       return deferred.promise;
     });
