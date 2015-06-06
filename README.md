@@ -14,5 +14,13 @@ Require in to your Protractor specs, instantiate utilities object, and call func
 
 * hasClass
 
-  Utility function to check whether element has exact match for a class
-  Returns a promise
+  Utility function to check whether element has exact match for a class. 
+  Returns a promise.
+
+* containsOneOfText
+
+  Utility Function to check whether text contains any of an array of text values i.e. the needles we're checking for.
+
+* OptionsWrapper
+
+  Utility Class for wrapping elements with multiple options and simplifying access to setting and getting those options.
